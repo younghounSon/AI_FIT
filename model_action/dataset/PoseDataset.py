@@ -1,8 +1,9 @@
 import os
 import json
 import numpy as np
-from tqdm import tqdm
-from torch.utils.data import Dataset, DataLoader
+import pickle
+import torch
+from torch.utils.data import Dataset
 
 HEIGHT = 1080
 WIDTH = 1920
@@ -53,23 +54,6 @@ class PoseDataset(Dataset):
         return xy,cls_label,cond_label
 
 if __name__ == '__main__':
-    dataset_val = PoseDataset("./tcn_dataset/train", mapping="./tcn_dataset/exercise_mapping.json")
-    dataloader_val = DataLoader(dataset_val, batch_size=8, shuffle=True, num_workers=0)
-
-    true_count = np.zeros(5, dtype=np.int64)
-    total_count = np.zeros(5, dtype=np.int64)
-
-    for inputs, cls, cond in tqdm(dataloader_val):
-        # cond: (B,5) float tensor
-        cond_np = cond.numpy().astype(bool)  # (B,5)
-        true_count += cond_np.sum(axis=0)
-        total_count += cond_np.shape[0]      # batch 크기만큼 각 상태에 누적
-
-    ratios = true_count / total_count
-
-    print("=== Condition True Ratio per index ===")
-    for i, r in enumerate(ratios):
-        print(f"Cond {i}: True {true_count[i]} / {total_count[i]} "
-              f"({r*100:.2f}% True, {(1-r)*100:.2f}% False)")
+    exit()
 
     
