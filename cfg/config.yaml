@@ -1,0 +1,8 @@
+# Model Architecture & Pretrained Path
+vision_type: "yolo"
+vision_pretrain_path: ~
+action_type: "agcn"
+action_pretrain_path: ~
+
+# Dataset Define
+output_path: "output"
