@@ -25,5 +25,5 @@ class BaseModel():
             raise NotImplementedError(f'optimizer {optim_type} is not supported yet.')
     
     def setup_schedulers(self):
-        for o
+        pass
 

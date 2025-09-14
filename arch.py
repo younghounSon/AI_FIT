@@ -15,8 +15,7 @@ class TCNModel(nn.Module):
         max_conds = max(cond_counts)
 
         mask_table = torch.zeros(num_classes, max_conds, dtype=torch.bool)
-        for idx,num in enumerate(cond_counts):
-            mask_table[idx,:num] = True
+        for idx,num in enumerate(cond_counts): mask_table[idx,:num] = True
         self.register_buffer("cond_valid_table", mask_table)
 
         # Backbone Definition
@@ -68,10 +67,6 @@ class TCNModel(nn.Module):
         return x
 
     def forward(self, x, y_type=None, mode: str = 'train'):
-        """
-        mode: 'train'이면 정답 운동 y_type으로 라우팅(teacher forcing),
-              그 외('eval','inference')는 예측 운동으로 라우팅
-        """
         x = self._prep_input(x)
 
         # Backbone: (B,T,48) -> (B,T,64)
