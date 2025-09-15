@@ -2,7 +2,7 @@ import numpy as np
 import sys
 
 sys.path.extend(['../'])
-from graph import tools
+from . import tools
 import networkx as nx
 
 # Joint index:

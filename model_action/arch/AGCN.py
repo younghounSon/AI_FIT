@@ -1,11 +1,11 @@
 import torch
 import torch.nn as nn
 import math
-from model_action.arch import AGCNHead
-from model_action.arch.utils import *
+from .Heads import AGCNHead
+from .utils import *
 from torch.autograd import Variable
 import numpy as np
-
+from .graph.mygraph import Graph
 class unit_tcn(nn.Module):
     def __init__(self, in_channels: int, out_channels: int, kernel_size: int = 9, stride: int = 1):
         super().__init__()
@@ -105,6 +105,7 @@ class AGCNBackbone(nn.Module):
         super().__init__()
         if graph is None:
             raise ValueError("graph class path is required")
+        
         Graph = import_class(graph)
         self.graph = Graph(**graph_args)
         A = self.graph.A
@@ -165,6 +166,7 @@ class MultiHeadAGCN(nn.Module):
                  in_channels=3,
                  drop_out=0.0):
         super().__init__()
+        
         self.backbone = AGCNBackbone(
             num_point=num_point,
             num_person=num_person,
@@ -187,3 +189,18 @@ class MultiHeadAGCN(nn.Module):
         """
         feat = self.backbone(x)
         return self.head(feat)
+
+if __name__ == '__main__':
+    model = MultiHeadAGCN(
+        num_exercises=41,
+        num_states_per_exercise=[5]*41,
+        num_point=24,
+        num_person=1,
+        graph="model_action.arch.graph.mygraph.Graph",
+        graph_args={"labeling_mode": "spatial"},
+        in_channels=2,  # x,y만 쓰는 경우
+        drop_out=0.5
+    )
+    input = torch.randn((8,2,16,24,1))
+    output = model(input)
+    

@@ -23,3 +23,7 @@ def conv_init(conv):
 def bn_init(bn, scale):
     nn.init.constant_(bn.weight, scale)
     nn.init.constant_(bn.bias, 0)
+
+def fc_init(fc):
+    nn.init.xavier_normal_(fc.weight)
+    nn.init.constant_(fc.bias, 0)
