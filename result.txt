@@ -1,0 +1,7 @@
+✅ Evaluation Results
+Joint:
+  ExAcc 0.9738, StateAcc 0.8628, ExF1 0.9749, StateF1 0.9669
+Bone:
+  ExAcc 0.9367, StateAcc 0.7815, ExF1 0.9453, StateF1 0.9512
+Ensemble:
+  ExAcc 0.9775, StateAcc 0.8865, ExF1 0.9791, StateF1 0.9727
